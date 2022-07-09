@@ -1,0 +1,7 @@
+
+*.ova
+*.tfstate
+*.tfstate.backup
+.terraform/*
+*.tfvars
+

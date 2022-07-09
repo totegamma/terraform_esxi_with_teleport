@@ -1,0 +1,22 @@
+#cloud-config
+
+password: ubuntu
+chpasswd: { expire: False }
+ssh_pwauth: True
+
+package_update: true
+package_upgrade: true
+packages:
+    - hello
+
+hostname: myFirstVM
+bootcmd:
+    - sudo touch /hoge.txt
+users:
+    - name: thotgamma
+      passwd: "$1$qRuAGKAb$zjFxdG6kTPwSrnnfT16ar1"
+      lock_passwd: false
+      ssh_authorized_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDrc9PGJ+ViqzVOh5xuOHiZDAmu4X12VVo/YjT3+XCfwS27K7UBs67BdI6P3OYhxDotUQ01tYJQOlZMOCVDfglqqUlhF4RPfAA5L412Kd545AGqOWC/1rQbazr9wlGQC6rjrCRePIxCtxKk2NE5su+jT842W7D6WnKn9vEQ7lfHAGD30APjvI8VdxSY3DwqApeeXwlIu7iq0pZ9c01mcJjj3eVePLprYRai3zZ4vVKeXoIzqtP1ISJFO9r+oLT7r72iK3GxZR81KOnhQF+b+Ur1NW1a5YQwHlb7ZcNFwQ8yPfTYsykABhFNl42Yhg8huuSdVTc5PLBnlmw4eZY1lCsRbNQ83lY+ilPOi8VgdkoMNDD/rEpnz0H4IX1381DpqTZRBAilaObdhXv3edK2womRtRRd3OKcKuyP3arDfYIZco48nWLcW7QUMI+P56GwD4L2IdvuAKawXz+WuraQ0+Y3MLWDouiKI0+lUASSNinDo5Sk028gwo8Ep4pL82870qc= thotgamma@WHITETT
+
+
