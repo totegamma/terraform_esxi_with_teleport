@@ -1,7 +1,23 @@
 #cloud-config
 
 runcmd:
+    - [ sudo, systemctl, enable, teleport.service ]
     - [ sudo, systemctl, start, teleport.service ]
+
+device_aliases:
+    persistent: /dev/sdb
+disk_setup:
+    persistent:
+        table_type: gpt
+        layout: [100]
+        #overwrite: true
+fs_setup:
+    - label: fs1
+      filesystem: ext4
+      device: persistent.1
+
+mounts:
+    - ["persistent.1", "/persistent"]
 
 apt:
     sources:
@@ -23,7 +39,7 @@ write_files:
         version: v2
         teleport:
           nodename: 10.58.0.101
-          data_dir: /var/lib/teleport
+          data_dir: /persistent/teleport
           log:
             output: stderr
             severity: INFO
@@ -53,6 +69,7 @@ users:
       passwd: "$1$qRuAGKAb$zjFxdG6kTPwSrnnfT16ar1"
       lock_passwd: false
       sudo: ALL=(ALL) NOPASSWD:ALL
+      shell: /bin/bash
       ssh_authorized_keys:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDrc9PGJ+ViqzVOh5xuOHiZDAmu4X12VVo/YjT3+XCfwS27K7UBs67BdI6P3OYhxDotUQ01tYJQOlZMOCVDfglqqUlhF4RPfAA5L412Kd545AGqOWC/1rQbazr9wlGQC6rjrCRePIxCtxKk2NE5su+jT842W7D6WnKn9vEQ7lfHAGD30APjvI8VdxSY3DwqApeeXwlIu7iq0pZ9c01mcJjj3eVePLprYRai3zZ4vVKeXoIzqtP1ISJFO9r+oLT7r72iK3GxZR81KOnhQF+b+Ur1NW1a5YQwHlb7ZcNFwQ8yPfTYsykABhFNl42Yhg8huuSdVTc5PLBnlmw4eZY1lCsRbNQ83lY+ilPOi8VgdkoMNDD/rEpnz0H4IX1381DpqTZRBAilaObdhXv3edK2womRtRRd3OKcKuyP3arDfYIZco48nWLcW7QUMI+P56GwD4L2IdvuAKawXz+WuraQ0+Y3MLWDouiKI0+lUASSNinDo5Sk028gwo8Ep4pL82870qc= thotgamma@WHITETT
 

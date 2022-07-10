@@ -18,6 +18,13 @@ provider "esxi" {
 	esxi_password = var.esxi_password
 }
 
+resource "esxi_virtual_disk" "proxy_disk" {
+	virtual_disk_disk_store = "Data"
+	virtual_disk_dir        = "Terraform"
+	virtual_disk_name       = "proxy_disk.vdmk"
+	virtual_disk_size       = 32
+}
+
 resource "esxi_guest" "teleport_proxy" {
 
 	guest_name     = "teleport_proxy"
@@ -31,6 +38,12 @@ resource "esxi_guest" "teleport_proxy" {
 	network_interfaces {
 		virtual_network = "playground"
 	}
+
+	virtual_disks {
+		virtual_disk_id = esxi_virtual_disk.proxy_disk.id
+		slot            = "0:1"
+	}
+
 	guestinfo = {
 		"userdata"          = base64gzip(file("./proxy/cloud-init.yaml"))
 		"userdata.encoding" = "gzip+base64"
