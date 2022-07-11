@@ -10,7 +10,7 @@ disk_setup:
     persistent:
         table_type: gpt
         layout: [100]
-        #overwrite: true
+
 fs_setup:
     - label: fs1
       filesystem: ext4

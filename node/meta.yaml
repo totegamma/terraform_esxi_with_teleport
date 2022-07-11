@@ -1,0 +1,13 @@
+network:
+    version: 1
+    config:
+        - type: physical
+          name: ens32
+          subnets:
+              - type: static
+                address: 10.58.0.102/24
+                gateway: 10.58.0.1
+        - type: nameserver
+          address:
+              - 10.58.0.1
+
